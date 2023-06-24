@@ -56,7 +56,7 @@ const server = http.createServer((req, res) => {
   const selectStatement = `
     SELECT \`${shortUrlColumnName}\`, \`${longUrlColumnName}\` \
     FROM \`${tableName}\` \
-    WHERE \`${shortUrlColumnName}\` = '${url.pathname}'
+    WHERE \`${shortUrlColumnName}\` = '${url.pathname.replace(/\//g, '')}'
   `;
 
   db.all(selectStatement, (err, rows) => {
