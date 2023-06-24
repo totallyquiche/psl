@@ -13,7 +13,12 @@ const baseUrl = process.env.BASE_URL;
 const apiKey = process.env.API_KEY;
 
 const server = http.createServer((req, res) => {
-  if (req.url === '/add' && req.method === 'POST') {
+  const url = new URL(req.url || '', `https://${req.headers.host}`);
+  if (
+    req.method === 'POST' &&
+    url.pathname.replace(/\//g, '') === 'add' &&
+    url.searchParams.get('api_key') === apiKey
+  ) {
     let body = '';
 
     req.on('data', data => {
@@ -24,19 +29,20 @@ const server = http.createServer((req, res) => {
       const db = new dbClient.Database(sqliteFileName);
       const params = querystring.parse(body);
 
-      if (body.api_key === apiKey) {
-        db.run(
-          `INSERT INTO ${tableName}(\`${longUrlColumnName}\`) VALUES(?)`,
-          [params.post_url],
-          err => {
-            if (err) {
-              console.log(err);
-            }
+      db.run(
+        `INSERT INTO ${tableName}(\`${shortUrlColumnName}\`, \`${longUrlColumnName}\`) VALUES(?, ?)`,
+        [
+          btoa(params.ID),
+          params.post_url,
+        ],
+        err => {
+          if (err) {
+            console.log(err);
           }
-        );
+        }
+      );
 
-        db.close();
-      }
+      db.close();
     });
 
     res.end();
