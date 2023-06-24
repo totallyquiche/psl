@@ -32,7 +32,7 @@ const server = http.createServer((req, res) => {
       db.run(
         `INSERT INTO ${tableName}(\`${shortUrlColumnName}\`, \`${longUrlColumnName}\`) VALUES(?, ?)`,
         [
-          btoa(params.ID),
+          Buffer.from(params.ID).toString('base64'),
           params.post_url,
         ],
         err => {
