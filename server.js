@@ -4,7 +4,7 @@ const http = require('http');
 const dbClient = require('sqlite3');
 
 const shortUrlColumnName = process.env.SHORT_COLUMN_NAME
-const longUrlColumNName = process.env.LONG_COLUMN_NAME
+const longUrlColumnName = process.env.LONG_COLUMN_NAME
 const tableName = process.env.TABLE_NAME
 const sqliteFileName = process.env.SQLITE_FILE_NAME;
 const serverPort = process.env.SERVER_PORT;
@@ -14,7 +14,7 @@ const server = http.createServer((req, res) => {
   const db = new dbClient.Database(sqliteFileName);
 
   const selectStatement = `
-    SELECT \`${shortUrlColumnName}\`, \`${longUrlColumNName}\` \
+    SELECT \`${shortUrlColumnName}\`, \`${longUrlColumnName}\` \
     FROM \`${tableName}\` \
     WHERE \`${shortUrlColumnName}\` = '${req.url}'
   `;
