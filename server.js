@@ -14,6 +14,7 @@ const apiKey = process.env.API_KEY;
 
 const server = http.createServer((req, res) => {
   const url = new URL(req.url || '', `https://${req.headers.host}`);
+
   if (
     req.method === 'POST' &&
     url.pathname.replace(/\//g, '') === 'add' &&
@@ -55,7 +56,7 @@ const server = http.createServer((req, res) => {
   const selectStatement = `
     SELECT \`${shortUrlColumnName}\`, \`${longUrlColumnName}\` \
     FROM \`${tableName}\` \
-    WHERE \`${shortUrlColumnName}\` = '${req.url}'
+    WHERE \`${shortUrlColumnName}\` = '${url.pathname}'
   `;
 
   db.all(selectStatement, (err, rows) => {
