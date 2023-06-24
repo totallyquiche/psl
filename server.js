@@ -4,12 +4,11 @@ const http = require('http');
 const dbClient = require('sqlite3');
 var querystring = require('querystring');
 
-const shortUrlColumnName = process.env.SHORT_COLUMN_NAME
-const longUrlColumnName = process.env.LONG_COLUMN_NAME
+const slugColumnName = process.env.SLUG_COLUMN_NAME
+const urlColumnName = process.env.URL_COLUMN_NAME
 const tableName = process.env.TABLE_NAME
 const sqliteFileName = process.env.SQLITE_FILE_NAME;
 const serverPort = process.env.SERVER_PORT;
-const baseUrl = process.env.BASE_URL;
 const apiKey = process.env.API_KEY;
 
 const server = http.createServer((req, res) => {
@@ -31,7 +30,7 @@ const server = http.createServer((req, res) => {
       const params = querystring.parse(body);
 
       db.run(
-        `INSERT INTO ${tableName}(\`${shortUrlColumnName}\`, \`${longUrlColumnName}\`) VALUES(?, ?)`,
+        `INSERT INTO ${tableName}(\`${slugColumnName}\`, \`${urlColumnName}\`) VALUES(?, ?)`,
         [
           Buffer.from(params.ID).toString('base64'),
           params.post_url,
@@ -54,9 +53,9 @@ const server = http.createServer((req, res) => {
   const db = new dbClient.Database(sqliteFileName);
 
   const selectStatement = `
-    SELECT \`${shortUrlColumnName}\`, \`${longUrlColumnName}\` \
+    SELECT \`${slugColumnName}\`, \`${urlColumnName}\` \
     FROM \`${tableName}\` \
-    WHERE \`${shortUrlColumnName}\` = '${url.pathname.replace(/\//g, '')}'
+    WHERE \`${slugColumnName}\` = '${url.pathname.replace(/\//g, '')}'
   `;
 
   db.all(selectStatement, (err, rows) => {
@@ -64,7 +63,7 @@ const server = http.createServer((req, res) => {
       res.writeHead(500, {'Content-Type': 'text/plain'});
     } else if (rows.length) {
       res.writeHead(302, {
-        'Location': `${baseUrl}${rows[0].long}`,
+        'Location': rows[0].long,
       });
     } else {
       res.writeHead(400, {'Content-Type': 'text/plain'});
