@@ -10,6 +10,7 @@ const tableName = process.env.TABLE_NAME
 const sqliteFileName = process.env.SQLITE_FILE_NAME;
 const serverPort = process.env.SERVER_PORT;
 const apiKey = process.env.API_KEY;
+const postParamsSlugKey = process.env.POST_PARAMS_SLUG_KEY;
 const postParamsUrlKey = process.env.POST_PARAMS_URL_KEY;
 
 const server = http.createServer((req, res) => {
@@ -33,7 +34,7 @@ const server = http.createServer((req, res) => {
       db.run(
         `INSERT INTO ${tableName}(\`${slugColumnName}\`, \`${urlColumnName}\`) VALUES(?, ?)`,
         [
-          Buffer.from(params.ID).toString('base64'),
+          Buffer.from(params[postParamsSlugKey]).toString('base64'),
           params[postParamsUrlKey]
         ],
         err => {
