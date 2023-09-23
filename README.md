@@ -1,6 +1,6 @@
 # Pumpkin Spice Linkté
 
-Pumpkin Spice Linkté (PSL) is a URL shortener engine built on Node.
+Pumpkin Spice Linkté (PSL) is a permashortlink engine (URL shortener) built on Node.
 
 As basic as America's favorite fall garbage coffee drink!
 
