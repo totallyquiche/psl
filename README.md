@@ -29,4 +29,4 @@ As basic as America's favorite fall garbage coffee drink!
 
 ### Example SQLite Schema
 
-`CREATE TABLE urls (slug TEXT, url TEXT);`
+`CREATE TABLE urls (slug TEXT UNIQUE, url TEXT);`
