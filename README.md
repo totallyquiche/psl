@@ -19,14 +19,38 @@ As basic as America's favorite fall garbage coffee drink!
 1. Populate the database with routes
 
     ```sql
-    INSERT INTO urls('[SLUG]', '[URL]') VALUES('qq', 'https://theqq.website')
+    INSERT INTO urls('{SLUG}', '{URL}') VALUES('qq', 'https://theqq.website')
     ```
 
 1. Rev up the engine with `node server.js`
-1. Requests to the server containing `[SLUG]` are redirected to `[URL]`
+1. Requests to the server containing `{SLUG}` are redirected to `{URL}`
 
     In our example, `https://[SERVER_HOST]:[SERVER_PORT]/qq` redirects to `https://theqq.website`
 
 ### Example SQLite Schema
 
 `CREATE TABLE urls (slug TEXT UNIQUE, url TEXT);`
+
+## Adding Shots
+
+PSL comes with a simple API for adding new redirects (shots).
+
+Simply make a `POST` request with the following JSON payload:
+
+```json
+{
+    "{SLUG_COLUMN_NAME}": "{SLUG}",
+    "{URL_COLUMN_NAME}": "{URL}",
+    "secretKey": "{SECRET_KEY}"
+}
+```
+
+### Example JSON Payload
+
+```json
+{
+    "slug": "abc123",
+    "url": "https://theqq.website/abc123",
+    "secretKey": "xyz098"
+}
+```
