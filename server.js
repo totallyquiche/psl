@@ -27,8 +27,8 @@ const handlePost = (req, res, db) => {
 
     db.run(
       insertStatement,
-      data.slug,
-      data.url
+      data[slugColumnName],
+      data[urlColumnName]
     );
 
     res.writeHead(400, {'Content-Type': 'text/plain'});
