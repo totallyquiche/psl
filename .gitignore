@@ -1,1 +1,3 @@
 node_modules
+jest.setup.js
+.env.test

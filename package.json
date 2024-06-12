@@ -27,9 +27,15 @@
   "devDependencies": {
     "jest": "^29.7.0"
   },
+  "jest": {
+    "setupFiles": ["./jest.setup.js"]
+  },
   "prettier": {
     "trailingComma": "es5",
     "tabWidth": 2,
     "semi": true
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
   }
 }
