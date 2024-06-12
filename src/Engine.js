@@ -5,7 +5,7 @@ module.exports = class {
   #currentIndex = 0;
   #urls = {};
 
-  convert(originalUrl) {
+  shorten(originalUrl) {
     const invalidUrlError = new Error("Invalid URL");
 
     if (

@@ -10,7 +10,7 @@ describe("Engine", () => {
   test("should return a different URL than given", () => {
     const url = "https://github.com";
 
-    expect(engine.convert(url)).not.toBe(url);
+    expect(engine.shorten(url)).not.toBe(url);
   });
 
   test("should only allow URLs starting with http:// or https://", () => {
@@ -23,11 +23,11 @@ describe("Engine", () => {
     const validUrls = ["http://github.com", "https://github.com"];
 
     invalidUrls.forEach((invalidUrl) => {
-      expect(() => engine.convert(invalidUrl)).toThrow(invalidUrlError);
+      expect(() => engine.shorten(invalidUrl)).toThrow(invalidUrlError);
     });
 
     validUrls.forEach((validUrl) => {
-      expect(() => engine.convert(validUrl)).not.toThrow(invalidUrlError);
+      expect(() => engine.shorten(validUrl)).not.toThrow(invalidUrlError);
     });
   });
 
@@ -41,11 +41,11 @@ describe("Engine", () => {
     ];
 
     invalidUrls.forEach((invalidUrl) => {
-      expect(() => engine.convert(invalidUrl)).toThrow(invalidUrlError);
+      expect(() => engine.shorten(invalidUrl)).toThrow(invalidUrlError);
     });
 
     validUrls.forEach((validUrl) => {
-      expect(() => engine.convert(validUrl)).not.toThrow(invalidUrlError);
+      expect(() => engine.shorten(validUrl)).not.toThrow(invalidUrlError);
     });
   });
 
@@ -53,7 +53,7 @@ describe("Engine", () => {
     const url = "https://not.github.com";
     const baseURL = Config.getValue("BASE_URL");
 
-    expect(engine.convert(url).startsWith(baseURL + "/")).toBe(true);
+    expect(engine.shorten(url).startsWith(baseURL + "/")).toBe(true);
   });
 
   test("should return a url ending in a hash", () => {
@@ -61,26 +61,26 @@ describe("Engine", () => {
     const baseURL = Config.getValue("BASE_URL");
     const pattern = /[a-zA-Z0-9]*$/;
 
-    expect(engine.convert(url).split(baseURL + "/")[1]).toMatch(pattern);
+    expect(engine.shorten(url).split(baseURL + "/")[1]).toMatch(pattern);
   });
 
   test("returns different URLs when given different URLs", () => {
-    const firstUrl = engine.convert("http://github.com");
-    const secondUrl = engine.convert("https://github.com");
+    const firstUrl = engine.shorten("http://github.com");
+    const secondUrl = engine.shorten("https://github.com");
 
     expect(firstUrl).not.toBe(secondUrl);
   });
 
   test("returns different URLs when given same URL", () => {
-    const firstUrl = engine.convert("https://github.com");
-    const secondUrl = engine.convert("https://github.com");
+    const firstUrl = engine.shorten("https://github.com");
+    const secondUrl = engine.shorten("https://github.com");
 
     expect(firstUrl).not.toBe(secondUrl);
   });
 
   test("returns original URL when given shortened URL", () => {
     const originalUrl = "https://github.com";
-    const shortenedUrl = engine.convert(originalUrl);
+    const shortenedUrl = engine.shorten(originalUrl);
 
     expect(engine.lookup(shortenedUrl)).toBe(originalUrl);
   });
