@@ -1,5 +1,11 @@
 module.exports = class {
-  convert(url) {
-    return true;
+  convert(urlString) {
+    const invalidUrlError = new Error("Invalid URL");
+
+    if (!urlString.startsWith("http://") && !urlString.startsWith("https://")) {
+      throw invalidUrlError;
+    }
+
+    const url = new URL(urlString);
   }
 };
