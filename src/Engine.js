@@ -1,3 +1,5 @@
+const Config = require("../src/Config");
+
 module.exports = class {
   convert(urlString) {
     const invalidUrlError = new Error("Invalid URL");
@@ -10,6 +12,8 @@ module.exports = class {
       throw invalidUrlError;
     }
 
-    const url = new URL(urlString);
+    new URL(urlString);
+
+    return `${Config.getValue("BASE_URL")}/abc`;
   }
 };

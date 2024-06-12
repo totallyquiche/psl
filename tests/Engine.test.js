@@ -1,4 +1,7 @@
+require("dotenv").config({ path: ".env.test" });
+
 const Engine = require("../src/Engine");
+const Config = require("../src/Config");
 
 describe("Engine", () => {
   const engine = new Engine();
@@ -44,5 +47,12 @@ describe("Engine", () => {
     validUrls.forEach((validUrl) => {
       expect(() => engine.convert(validUrl)).not.toThrow(invalidUrlError);
     });
+  });
+
+  test("should return a url using the base URL", () => {
+    const url = "https://not.github.com";
+    const baseURL = Config.getValue("BASE_URL");
+
+    expect(engine.convert(url).startsWith(baseURL + "/")).toBe(true);
   });
 });
