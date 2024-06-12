@@ -70,4 +70,11 @@ describe("Engine", () => {
 
     expect(firstUrl).not.toBe(secondUrl);
   });
+
+  test("returns different URLs when given same URL", () => {
+    const firstUrl = engine.convert("https://github.com");
+    const secondUrl = engine.convert("https://github.com");
+
+    expect(firstUrl).not.toBe(secondUrl);
+  });
 });
