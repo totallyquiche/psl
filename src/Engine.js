@@ -6,6 +6,10 @@ module.exports = class {
       throw invalidUrlError;
     }
 
+    if (!urlString.match(/\..[^.]*$/)) {
+      throw invalidUrlError;
+    }
+
     const url = new URL(urlString);
   }
 };
