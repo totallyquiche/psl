@@ -77,4 +77,11 @@ describe("Engine", () => {
 
     expect(firstUrl).not.toBe(secondUrl);
   });
+
+  test("returns original URL when given shortened URL", () => {
+    const originalUrl = "https://github.com";
+    const shortenedUrl = engine.convert(originalUrl);
+
+    expect(engine.lookup(shortenedUrl)).toBe(originalUrl);
+  });
 });

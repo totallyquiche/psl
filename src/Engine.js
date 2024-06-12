@@ -3,24 +3,34 @@ const { default: Sqids } = require("sqids");
 
 module.exports = class {
   #currentIndex = 0;
+  #urls = {};
 
-  convert(urlString) {
+  convert(originalUrl) {
     const invalidUrlError = new Error("Invalid URL");
 
-    if (!urlString.startsWith("http://") && !urlString.startsWith("https://")) {
+    if (
+      !originalUrl.startsWith("http://") &&
+      !originalUrl.startsWith("https://")
+    ) {
       throw invalidUrlError;
     }
 
-    if (!urlString.match(/\..[^.]*$/)) {
+    if (!originalUrl.match(/\..[^.]*$/)) {
       throw invalidUrlError;
     }
 
-    new URL(urlString);
+    new URL(originalUrl);
 
     const hash = new Sqids().encode([this.#currentIndex]);
+    const shortenedUrl = `${Config.getValue("BASE_URL")}/${hash}`;
 
     this.#currentIndex++;
+    this.#urls[shortenedUrl] = originalUrl;
 
-    return `${Config.getValue("BASE_URL")}/${hash}`;
+    return shortenedUrl;
+  }
+
+  lookup(url) {
+    return this.#urls[url];
   }
 };
