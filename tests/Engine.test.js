@@ -55,4 +55,12 @@ describe("Engine", () => {
 
     expect(engine.convert(url).startsWith(baseURL + "/")).toBe(true);
   });
+
+  test("should return a url ending in a hash", () => {
+    const url = "https://github.com";
+    const baseURL = Config.getValue("BASE_URL");
+    const pattern = /[a-zA-Z0-9]*$/;
+
+    expect(engine.convert(url).split(baseURL + "/")[1]).toMatch(pattern);
+  });
 });
