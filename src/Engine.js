@@ -1,9 +1,13 @@
 const Config = require("../src/Config");
+
 const { default: Sqids } = require("sqids");
 
 module.exports = class {
-  #currentIndex = 0;
-  #urls = {};
+  #Database;
+
+  constructor(database) {
+    this.#Database = database;
+  }
 
   shorten(originalUrl) {
     const invalidUrlError = new Error("Invalid URL");
@@ -21,16 +25,19 @@ module.exports = class {
 
     new URL(originalUrl);
 
-    const hash = new Sqids().encode([this.#currentIndex]);
+    const hash = this._getHash(this.#Database.getIndex());
     const shortenedUrl = `${Config.getValue("BASE_URL")}/${hash}`;
 
-    this.#currentIndex++;
-    this.#urls[shortenedUrl] = originalUrl;
+    this.#Database.add(shortenedUrl, originalUrl);
 
     return shortenedUrl;
   }
 
+  _getHash(number) {
+    return new Sqids().encode([number]);
+  }
+
   lookup(url) {
-    return this.#urls[url];
+    return this.#Database.load(url);
   }
 };

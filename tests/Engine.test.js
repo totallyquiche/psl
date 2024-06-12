@@ -1,10 +1,11 @@
 require("dotenv").config({ path: ".env.test" });
 
+const Database = require("../src/Database");
 const Engine = require("../src/Engine");
 const Config = require("../src/Config");
 
 describe("Engine", () => {
-  const engine = new Engine();
+  const engine = new Engine(new Database());
   const invalidUrlError = new Error("Invalid URL");
 
   test("should return a different URL than given", () => {
@@ -83,5 +84,9 @@ describe("Engine", () => {
     const shortenedUrl = engine.shorten(originalUrl);
 
     expect(engine.lookup(shortenedUrl)).toBe(originalUrl);
+  });
+
+  test("regenerates shortened URL when shortened URL already exists", () => {
+    //
   });
 });
