@@ -63,4 +63,11 @@ describe("Engine", () => {
 
     expect(engine.convert(url).split(baseURL + "/")[1]).toMatch(pattern);
   });
+
+  test("returns different URLs when given different URLs", () => {
+    const firstUrl = engine.convert("http://github.com");
+    const secondUrl = engine.convert("https://github.com");
+
+    expect(firstUrl).not.toBe(secondUrl);
+  });
 });
