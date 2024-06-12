@@ -85,8 +85,4 @@ describe("Engine", () => {
 
     expect(engine.lookup(shortenedUrl)).toBe(originalUrl);
   });
-
-  test("regenerates shortened URL when shortened URL already exists", () => {
-    //
-  });
 });
