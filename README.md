@@ -2,10 +2,8 @@
 
 A permashortlink engine (a.k.a. "URL shortener").
 
-Proof-of-concept and exercise in test-driven development.
-
-Definitely not prod-ready. For one thing, there is no real persistance layer.
-`Database` is just a thin interface for an in-memory JavaScript object.
+Proof-of-concept and exercise in test-driven development. Definitely not prod-ready. For one thing, there is no real persistance layer. `Database` is
+just a thin interface for an in-memory JavaScript object.
 
 ## Setup
 
