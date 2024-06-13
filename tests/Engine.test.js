@@ -80,7 +80,7 @@ describe("Engine", () => {
   });
 
   test("returns original URL when given shortened URL", () => {
-    const originalUrl = "https://github.com";
+    const originalUrl = "https://github.com/";
     const shortenedUrl = engine.shorten(originalUrl);
 
     expect(engine.lookup(shortenedUrl)).toBe(originalUrl);

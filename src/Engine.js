@@ -23,21 +23,24 @@ module.exports = class {
       throw invalidUrlError;
     }
 
-    new URL(originalUrl);
+    originalUrl = new URL(originalUrl);
 
-    const hash = this._getHash(this.#Database.getIndex());
-    const shortenedUrl = `${Config.getValue("BASE_URL")}/${hash}`;
+    const shortenedUrl = this._getShortenedUrl(this.#Database.getIndex());
 
-    this.#Database.add(shortenedUrl, originalUrl);
+    this.#Database.add(shortenedUrl, originalUrl.toString());
 
     return shortenedUrl;
   }
 
-  _getHash(number) {
-    return new Sqids().encode([number]);
+  lookup(originalUrl) {
+    originalUrl = new URL(originalUrl);
+
+    return this.#Database.load(originalUrl.toString());
   }
 
-  lookup(url) {
-    return this.#Database.load(url);
+  _getShortenedUrl(number) {
+    const hash = new Sqids().encode([number]);
+
+    return `${Config.getValue("BASE_URL")}/${hash}`;
   }
 };
