@@ -24,5 +24,6 @@ const engine = new Engine(database);
 
 let longUrl = "https://github.com/";
 let shortUrl = engine.shorten(longUrl); // https://github.com/{UNIQUE_HASH}
+
 engine.lookup(shortUrl);                // https://github.com/
 ```
